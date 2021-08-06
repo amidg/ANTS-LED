@@ -65,6 +65,13 @@ void setup()
       LED.subscribe(RightLEDstrip); //motor 2 -> included in motor 1
     }
 
+    LeftStrip = Adafruit_NeoPixel(LEFTCOUNT, LEFTLED, NEO_GRB + NEO_KHZ800);
+    RightStrip = Adafruit_NeoPixel(RIGHTCOUNT, RIGHTLED, NEO_GRB + NEO_KHZ800);
+
+    LeftStrip.begin();
+    RightStrip.begin();
+    LeftStrip.show(); // Initialize all pixels to 'off'
+    RightStrip.show();
 }
 
 // LOOP FUNCTION ====================================================================================
@@ -93,11 +100,51 @@ void loop()
 void leftLEDcontrol(const std_msgs::String& msg1) { //motor 1 data from ROS to motor control
   leftLEDcommand = msg1.data;
 
-  
+  if (leftLEDcommand == "forward") {
+    
+  } else if (leftLEDcommand == "reverse") {
+
+  } else if (leftLEDcommand == "left") {
+
+  } else if (leftLEDcommand == "right") {
+
+  }
 }
 
 void rightLEDcontrol(const std_msgs::String& msg2) { //motor 2 data from ROS to motor control
   
+}
+
+void drawForward(Adafruit_NeoPixel *ledStrip, int LEDCOUNT) {
+  for (int i = 4; i < LEDCOUNT; i++) {
+    ledStrip->setPixelColor(i, 0, 255, 0);
+    ledStrip->setPixelColor(i-1, 0, 255, 0);
+    ledStrip->setPixelColor(i-2, 0, 255, 0);
+    ledStrip->setPixelColor(i-3, 0, 255, 0);
+    ledStrip->setPixelColor(i-4, 0, 255, 0);
+
+    ledStrip->setPixelColor(i-5, 0, 0, 0);
+  }
+}
+
+void drawReverse(Adafruit_NeoPixel *ledStrip, int LEDCOUNT) {
+  for (int i = LEDCOUNT; i >= 0; i--) {
+    ledStrip->setPixelColor(i, 0, 255, 0);
+    ledStrip->setPixelColor(i-1, 0, 255, 0);
+    ledStrip->setPixelColor(i-2, 0, 255, 0);
+    ledStrip->setPixelColor(i-3, 0, 255, 0);
+    ledStrip->setPixelColor(i-4, 0, 255, 0);
+
+    ledStrip->setPixelColor(i+1, 0, 0, 0);
+  }
+}
+
+void drawTurnLeft(Adafruit_NeoPixel *ledStrip, int LEDCOUNT) {
+  
+}
+
+void drawTurnRight(Adafruit_NeoPixel *ledStrip, int LEDCOUNT) {
+
 }
 
 void BluetoothROS(void * parameter) {
