@@ -29,6 +29,10 @@ BluetoothSerial SerialBT;
 TaskHandle_t BluetoothDataTransfer;
 void BluetoothROS(void * parameter);
 
+void drawForward(Adafruit_NeoPixel *ledStrip, int LEDCOUNT);
+void drawReverse(Adafruit_NeoPixel *ledStrip, int LEDCOUNT);
+void drawTurn(Adafruit_NeoPixel *ledStrip1, Adafruit_NeoPixel *ledStrip2, int LEDCOUNT);
+
 //WI-FI DEFINITIONS: ============================================================================
 const char* ssid     = "autobot_F07B";
 const char* password = "mse2021cap";
