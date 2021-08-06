@@ -22,6 +22,8 @@ Adafruit_NeoPixel RightStrip;
 #define RIGHTCOUNT 144
 
 unsigned long timeSinceStart = 0;
+unsigned long turnLeftTimer = 0;
+unsigned long turnRightTimer = 0;
 
 BluetoothSerial SerialBT;
 TaskHandle_t BluetoothDataTransfer;
@@ -101,18 +103,28 @@ void leftLEDcontrol(const std_msgs::String& msg1) { //motor 1 data from ROS to m
   leftLEDcommand = msg1.data;
 
   if (leftLEDcommand == "forward") {
-    
+    drawForward(&LeftStrip, LEFTCOUNT);
   } else if (leftLEDcommand == "reverse") {
-
+    drawReverse(&LeftStrip, LEFTCOUNT);
   } else if (leftLEDcommand == "left") {
-
+    drawTurn(&LeftStrip, &RightStrip, 144);
   } else if (leftLEDcommand == "right") {
-
+    drawTurn(&RightStrip, &LeftStrip, 144);
   }
 }
 
 void rightLEDcontrol(const std_msgs::String& msg2) { //motor 2 data from ROS to motor control
-  
+  rightLEDcommand = msg2.data;
+
+  if (leftLEDcommand == "forward") {
+    drawForward(&LeftStrip, LEFTCOUNT);
+  } else if (leftLEDcommand == "reverse") {
+    drawReverse(&LeftStrip, LEFTCOUNT);
+  } else if (leftLEDcommand == "left") {
+    drawTurn(&LeftStrip, &RightStrip, 144);
+  } else if (leftLEDcommand == "right") {
+    drawTurn(&RightStrip, &LeftStrip, 144);
+  }
 }
 
 void drawForward(Adafruit_NeoPixel *ledStrip, int LEDCOUNT) {
@@ -124,6 +136,7 @@ void drawForward(Adafruit_NeoPixel *ledStrip, int LEDCOUNT) {
     ledStrip->setPixelColor(i-4, 0, 255, 0);
 
     ledStrip->setPixelColor(i-5, 0, 0, 0);
+    ledStrip->show();
   }
 }
 
@@ -136,15 +149,12 @@ void drawReverse(Adafruit_NeoPixel *ledStrip, int LEDCOUNT) {
     ledStrip->setPixelColor(i-4, 0, 255, 0);
 
     ledStrip->setPixelColor(i+1, 0, 0, 0);
+    ledStrip->show();
   }
 }
 
-void drawTurnLeft(Adafruit_NeoPixel *ledStrip, int LEDCOUNT) {
+void drawTurn(Adafruit_NeoPixel *ledStrip1, Adafruit_NeoPixel *ledStrip2, int LEDCOUNT) {
   
-}
-
-void drawTurnRight(Adafruit_NeoPixel *ledStrip, int LEDCOUNT) {
-
 }
 
 void BluetoothROS(void * parameter) {
