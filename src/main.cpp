@@ -117,9 +117,9 @@ void rightLEDcontrol(const std_msgs::String& msg2) { //motor 2 data from ROS to 
   rightLEDcommand = msg2.data;
 
   if (leftLEDcommand == "forward") {
-    drawForward(&LeftStrip, LEFTCOUNT);
+    drawForward(&LeftStrip, RIGHTCOUNT);
   } else if (leftLEDcommand == "reverse") {
-    drawReverse(&LeftStrip, LEFTCOUNT);
+    drawReverse(&LeftStrip, RIGHTCOUNT);
   } else if (leftLEDcommand == "left") {
     drawTurn(&LeftStrip, &RightStrip, 144);
   } else if (leftLEDcommand == "right") {
@@ -154,7 +154,11 @@ void drawReverse(Adafruit_NeoPixel *ledStrip, int LEDCOUNT) {
 }
 
 void drawTurn(Adafruit_NeoPixel *ledStrip1, Adafruit_NeoPixel *ledStrip2, int LEDCOUNT) {
-  
+  //Strip1 is the priority one, Strip2 is the one that will be turned off
+  ledStrip1->fill(255, 165, 0);
+  ledStrip2->fill(0, 0, 0);
+  ledStrip1->show();
+  ledStrip2->show();
 }
 
 void BluetoothROS(void * parameter) {
