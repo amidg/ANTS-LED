@@ -1,5 +1,7 @@
 #include "Arduino.h"
 #include "Adafruit_NeoPixel.h"
+#include "ros.h"
+#include "ANTS_ROS.h"
 #include "BluetoothSerial.h" //adds Bluetooth support to existing ESP32
 
 #if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
@@ -9,6 +11,15 @@
 #define IGNOREDEBUG 0 //must be set to 0 to enable fully working
 #define USEBLUETOOTH 1 //must be 1 to use Blueooth for debugging
 #define MAXPOWER 0.2 //MAX POWER IN %/100
+
+Adafruit_NeoPixel LeftStrip;
+Adafruit_NeoPixel RightStrip;
+
+#define LEFTLED 25
+#define RIGHTLED 26
+
+#define LEFTCOUNT 144
+#define RIGHTCOUNT 144
 
 unsigned long timeSinceStart = 0;
 
@@ -43,8 +54,6 @@ void setup()
         SerialBT.println("Connected");
       }
     }
-
-    pinMode(GIGAVACENABLE, OUTPUT); //gigavac control relay
 
     //start wi-fi and ROS node
     if (!IGNOREDEBUG) {
@@ -82,6 +91,8 @@ void loop()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ADDITIONAL FUNCTIONS ================================================================================
 void leftLEDcontrol(const std_msgs::String& msg1) { //motor 1 data from ROS to motor control
+  leftLEDcommand = msg1.data;
+
   
 }
 
