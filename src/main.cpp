@@ -82,7 +82,9 @@ void setup()
 
 // LOOP FUNCTION ====================================================================================
 void loop()
-{
+{ 
+  LeftStrip.setBrightness(30);
+  RightStrip.setBrightness(30);
   if (!IGNOREDEBUG) {
     while(true) {
       //check the ROS condition first. If not connected and timeSinceStart is huge -> restart
